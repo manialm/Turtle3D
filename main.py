@@ -4,14 +4,14 @@ from transform import *
 from math import sin, cos
 
 # setup
-shape = 'octahedron'
-SCALE = 100
-dt = 0.002
+shape = 'torus'
+SCALE = 200
+dt = 0.02
 pu()
 speed('fastest')
 hideturtle()
 bgcolor('black')
-pencolor('aqua')
+pencolor('red')
 tracer(0)
 
 vertices = []
@@ -22,10 +22,10 @@ with open(f'shapes/{shape}_vertices.txt') as f:
 
 t = 0
 while True:
-    camera_pos = Vector(3 * cos(t), 3 * sin(t), 0)
+    camera_pos = Vector(3 * cos(t), 3 * sin(t), 2*sin(t)) * 0.5
     camera_plane = Plane(3 * cos(t), 3 * sin(t), sin(t))
 
-    new_vertices = [transform(vertex, camera_pos, camera_plane) for vertex in vertices]
+    new_vertices = [transform_with_perspective(vertex, camera_pos, camera_plane) for vertex in vertices]
 
     with open(f'shapes/{shape}_edges.txt', 'r') as f:
         for line in f:

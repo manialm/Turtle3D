@@ -2,6 +2,15 @@ from Vector import *
 from solve import *
 
 
+def distance_from_plane(point, plane):
+    x, y, z = point
+    a, b, c = plane
+
+    t = -(a*x + b*y + c*z) / (a**2 + b**2 + c**2)
+    
+    return abs(t * abs(Vector(a, b, c)))
+
+
 def project(point, plane):
     x, y, z = point
     a, b, c = plane
@@ -31,3 +40,17 @@ def transform(point, origin, plane):
     u, v = solve(b1.x, b2.x, x, b1.y, b2.y, y)
     # check:  z == b1.z * u + b2.z * v
     return u, v
+
+def transform_with_perspective(point, origin, plane):
+    point -= origin
+    proj = project(point, plane)
+
+    distance = distance_from_plane(point, plane)
+
+    x, y, z = proj
+    b1, b2 = find_basis(plane)
+    u, v = solve(b1.x, b2.x, x, b1.y, b2.y, y)
+    # check:  z == b1.z * u + b2.z * v
+
+    return u / distance, v / distance
+
