@@ -5,7 +5,7 @@ from math import sin, cos
 
 # setup
 shape = 'torus'
-SCALE = 200
+SCALE = 300
 dt = 0.02
 pu()
 speed('fastest')
@@ -23,7 +23,7 @@ with open(f'shapes/{shape}_vertices.txt') as f:
 t = 0
 while True:
     camera_pos = Vector(3 * cos(t), 3 * sin(t), 2*sin(t)) * 0.5
-    camera_plane = Plane(3 * cos(t), 3 * sin(t), sin(t))
+    camera_plane = Plane(3 * cos(t), 3 * sin(t), 2*sin(t))
 
     new_vertices = [transform_with_perspective(vertex, camera_pos, camera_plane) for vertex in vertices]
 

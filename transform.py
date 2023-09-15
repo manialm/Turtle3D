@@ -42,6 +42,8 @@ def transform(point, origin, plane):
     return u, v
 
 def transform_with_perspective(point, origin, plane):
+    from math import tan, log, exp, sin
+
     point -= origin
     proj = project(point, plane)
 
@@ -52,5 +54,7 @@ def transform_with_perspective(point, origin, plane):
     u, v = solve(b1.x, b2.x, x, b1.y, b2.y, y)
     # check:  z == b1.z * u + b2.z * v
 
-    return u / distance, v / distance
+    f = lambda x: sin(x)
+    g = lambda x: 1
+    return u * f(distance), v * g(distance)
 
